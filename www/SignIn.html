@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <title>MyClinic Login</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="cordova.js"></script>
+    <link rel="stylesheet" href="components/loader.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="cheatsheet.css" rel="stylesheet" />
+    <script src="components/loader.js"></script>
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="assets/css/main.css" rel="stylesheet">
+    
+    <!-- Custom Signin Styling to match the App Layout -->
+    <style>
+        .signin-wrapper {
+            min-height: calc(100vh - 40px); /* Adjusts for topbar height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: #f4f6f9;
+        }
+        .signin-card {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+    </style>
+
+    <script>
+        function SignIn(event) {
+            if (event) event.preventDefault(); // Prevents the browser from forcing a page refresh
+            
+            const user = document.getElementById("username").value.trim();
+            const pass = document.getElementById("password").value;
+            
+            // 1. Check for empty inputs
+            if (!user || !pass) {
+                alert("Please fill in all fields.");
+                return;
+            }
+            
+            const BASE_URL = "https://impotency-ragweed-unfocused.ngrok-free.dev/MyClinic/";
+            
+            fetch(BASE_URL + "login.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username: user, password: pass })
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message);
+                if (data.status === "success") {
+                    window.location.href = "about.html"; // Redirects straight to your dashboard panel
+                }
+            })
+            .catch(err => alert("Error: " + err));
+        }
+    </script>
+</head>
+
+<body>
+
+    <!-- Header & Topbar (Matches template layout) -->
+    <header id="header" class="header fixed-top">
+        <div class="topbar d-flex align-items-center dark-background">
+            <div class="container d-flex justify-content-center justify-content-md-between">
+                <div class="contact-info d-flex align-items-center">
+                    <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">contact@example.com</a></i>
+                    <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
+                </div>
+                <div class="social-links d-none d-md-flex align-items-center">
+                    <a href="#!" class="twitter"><i class="bi bi-twitter-x"></i></a>
+                    <a href="#!" class="facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="#!" class="instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="#!" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sign In Form Layout Container -->
+    <div class="signin-wrapper mt-5">
+        <div class="signin-card">
+            <h2 class="h3 mb-4 text-center text-dark fw-bold">MyClinic Portal</h2>
+            
+            <form onsubmit="SignIn(event)">
+                <div class="mb-3">
+                    <label for="username" class="form-label text-secondary small">Username (Email)</label>
+                    <input type="email" class="form-control" id="username" placeholder="name@example.com" required>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="password" class="form-label text-secondary small">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary w-100 fw-bold mb-3">Sign In</button>
+
+                <div class="text-center small text-muted">
+                    New user? <a href="SignUp.html" class="text-success text-decoration-none fw-bold">Sign up here</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src * data: gap: content: https://ssl.gstatic.com;
+                   style-src * 'unsafe-inline';
+                   script-src * 'unsafe-inline' 'unsafe-eval'">
+
+    <!-- Cordova -->
+    <script src="cordova.js"></script>
+    <script src="components/loader.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="cheatsheet.css" rel="stylesheet">
+
+    <!-- Vendor CSS -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link href="assets/css/main.css" rel="stylesheet">
+
+    <title>Sign Up</title>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header id="header" class="header fixed-top">
+    <div class="topbar d-flex align-items-center dark-background">
+        <div class="container d-flex justify-content-center justify-content-md-between">
+            
+            <div class="contact-info d-flex align-items-center">
+                <i class="bi bi-envelope d-flex align-items-center">
+                    <a href="mailto:contact@example.com">contact@example.com</a>
+                </i>
+                <i class="bi bi-phone d-flex align-items-center ms-4">
+                    <span>+1 5589 55488 55</span>
+                </i>
+            </div>
+
+            <div class="social-links d-none d-md-flex align-items-center">
+                <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
+                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+<!-- FORM -->
+<div class="container" style="margin-top:120px;">
+    <p class="h1 text-center">Sign Up</p>
+
+    <!-- FIXED: Added onsubmit layer to trigger your JS function -->
+    <form class="row g-3 needs-validation" onsubmit="SignIn(event)" novalidate>
+
+        <!-- Name -->
+        <div class="col-md-4">
+            <label class="form-label">Name</label>
+            <!-- FIXED: Added id="name" -->
+            <input type="text" id="name" class="form-control" required>
+            <div class="invalid-feedback">Please enter your name.</div>
+        </div>
+
+        <!-- Address -->
+        <div class="col-md-4">
+            <label class="form-label">Address</label>
+            <!-- FIXED: Added id="address" -->
+            <input type="text" id="address" class="form-control" required>
+            <div class="invalid-feedback">Please enter your address.</div>
+        </div>
+
+        <!-- Phone -->
+        <div class="col-md-4">
+            <label class="form-label">Phone</label>
+            <!-- FIXED: Added id="phone" -->
+            <input type="text" id="phone" class="form-control" required>
+            <div class="invalid-feedback">Please enter your phone number.</div>
+        </div>
+
+        <!-- Username -->
+        <div class="col-md-6">
+            <label class="form-label">Username</label>
+            <!-- FIXED: Added id="username" -->
+            <input type="text" id="username" class="form-control" required>
+            <div class="invalid-feedback">Please enter your username.</div>
+        </div>
+
+        <!-- Password -->
+        <div class="col-md-6">
+            <label class="form-label">Password</label>
+            <!-- FIXED: Added id="password" -->
+            <input type="password" id="password" class="form-control" required>
+            <div class="invalid-feedback">Please create your password.</div>
+        </div>
+
+
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">Submit</button>
+
+             <button type="button" class="btn btn-secondary"
+                onclick="window.location.href='SignIn.html'">
+                Back
+            </button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+        function SignIn(event) {
+            // FIXED: Prevent the browser from refreshing the page automatically
+            event.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const address = document.getElementById("address").value;
+            const phone = document.getElementById("phone").value;
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            
+            const BASE_URL = "https://impotency-ragweed-unfocused.ngrok-free.dev/MyClinic/";
+            
+            fetch(BASE_URL + "signUp.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name: name, address: address, phone: phone, username: username, password: password })
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message);
+                if (data.status === "success") {
+                    window.location.href = "SignIn.html"; 
+                }
+            })
+            .catch(err => alert("Error: " + err));
+        }
+</script>
+
+</body>
+</html>
